@@ -1,17 +1,23 @@
-# teste2ff
+# Fato ou Fake
 
-A new Flutter project.
+Fato ou Fake é um mini game educativo desenvolvido em Flutter/Dart como parte do projeto **Educação midiática, produção de conteúdo local e uso das TICs contra a desinformação em pequenas cidades fluminenses**.
 
-## Getting Started
+O objetivo do jogo é estimular o pensamento crítico por meio de perguntas que desafiam o jogador a identificar informações verdadeiras e falsas, contribuindo para a educação midiática e o combate à desinformação.
 
-This project is a starting point for a Flutter application.
+## Tecnologias utilizadas
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter
+- Dart
+- Material Design
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Funcionalidades
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Perguntas de Fato ou Fake
+- Embaralhamento das questões
+- Cronômetro por pergunta
+- Pontuação ao final da partida
+- Interface responsiva
+
+## Objetivo
+
+Contribuir para ações de educação midiática por meio de uma ferramenta interativa, incentivando a análise crítica das informações consumidas no ambiente digital.
