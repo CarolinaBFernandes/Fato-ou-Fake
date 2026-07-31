@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'tela_jogo.dart'; // Importa a tela para onde vamos navegar
+import 'tela_jogo.dart';
 
 class TelaHome extends StatelessWidget {
   @override
@@ -9,38 +8,84 @@ class TelaHome extends StatelessWidget {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
+          // 1. Cores Institucionais: Gradiente focado no Azul Marinho escuro
           gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.blue.shade900, Colors.purple.shade700],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF003066), // Azul padrão acadêmico
+              Color(0xFF001533), // Azul bem escuro para o fundo
+            ],
           ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // 2. Elemento Visual Acadêmico (Pode ser trocado pela logo da UFF depois)
+            Icon(
+                Icons.school_outlined,
+                size: 70,
+                color: Colors.white.withOpacity(0.9)
+            ),
+            SizedBox(height: 16),
+
+            // 3. Cabeçalho Institucional
             Text(
-              "FATO\nou\nFAKE",
+              "UNIVERSIDADE FEDERAL FLUMINENSE",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 60,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.white70,
+                letterSpacing: 2,
+              ),
+            ),
+
+            SizedBox(height: 50),
+
+            // 4. Título do Aplicativo (mais elegante e legível)
+            Text(
+              "FATO OU FAKE",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 48,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                letterSpacing: 4,
+                letterSpacing: 2,
                 shadows: [
-                  Shadow(color: Colors.black45, offset: Offset(3, 3), blurRadius: 10)
+                  Shadow(
+                      color: Colors.black54,
+                      offset: Offset(2, 2),
+                      blurRadius: 4
+                  )
                 ],
               ),
             ),
-            SizedBox(height: 60),
+
+            SizedBox(height: 8),
+
+            // 5. Subtítulo descritivo
+            Text(
+              "Projeto Acadêmico Interativo",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.blue[100],
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+
+            SizedBox(height: 70),
+
+            // 6. Botão com visual mais estruturado (menos arredondado)
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
-                foregroundColor: Colors.blue.shade900,
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                foregroundColor: Color(0xFF003066), // Texto no mesmo azul do fundo
+                padding: EdgeInsets.symmetric(horizontal: 60, vertical: 18),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(8), // Borda mais formal
                 ),
-                elevation: 10,
+                elevation: 4,
               ),
               onPressed: () {
                 Navigator.push(
@@ -49,8 +94,12 @@ class TelaHome extends StatelessWidget {
                 );
               },
               child: Text(
-                "COMEÇAR",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                "INICIAR",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.5,
+                ),
               ),
             ),
           ],

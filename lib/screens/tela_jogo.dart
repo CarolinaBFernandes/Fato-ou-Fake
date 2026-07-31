@@ -14,286 +14,347 @@ class TelaJogo extends StatefulWidget {
 }
 
 class _TelaJogoState extends State<TelaJogo> {
-int indice = 0;
-int pontuacao = 0;
+  int indice = 0;
+  int pontuacao = 0;
 
-late List<Pergunta> perguntas;
-late CronometroService cronometro;
+  late List<Pergunta> perguntas;
+  late CronometroService cronometro;
 
-static const int tempoMaximo = 10;
-int tempoRestante = tempoMaximo;
+  static const int tempoMaximo = 10;
+  int tempoRestante = tempoMaximo;
 
-bool respondeu = false;
+  bool respondeu = false;
 
-@override
-void initState() {
-super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-perguntas = List<Pergunta>.from(bancoPerguntas);
+    perguntas = List<Pergunta>.from(bancoPerguntas);
+    perguntas.shuffle();
 
-perguntas.shuffle();
+    if (perguntas.length > 10) {
+      perguntas = perguntas.take(10).toList();
+    }
 
-if (perguntas.length > 10) {
-perguntas = perguntas.take(10).toList();
-}
+    cronometro = CronometroService(
+      tempoMaximo: tempoMaximo,
+      onTick: (tempo) {
+        if (!mounted) return;
+        setState(() {
+          tempoRestante = tempo;
+        });
+      },
+      onTimeout: () {
+        if (!mounted) return;
+        responderTempoEsgotado();
+      },
+    );
 
-cronometro = CronometroService(
-tempoMaximo: tempoMaximo,
-onTick: (tempo) {
-if (!mounted) return;
+    cronometro.iniciar();
+  }
 
-setState(() {
-tempoRestante = tempo;
-});
-},
-onTimeout: () {
-if (!mounted) return;
+  // NOVA FUNÇÃO: Exibe o pop-up de acerto
+  void mostrarSucesso() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.green.shade50, // Um fundo levemente esverdeado
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // Faz o pop-up abraçar o conteúdo
+            children: [
+              const Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 80, // Ícone bem grande e chamativo
+              ),
+              const SizedBox(height: 15),
+              const Text(
+                "Você acertou!",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Fecha o pop-up
+                    proximaPergunta(); // Avança para a próxima
+                  },
+                  child: const Text(
+                    "Próxima Pergunta",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-responderTempoEsgotado();
-},
-);
+  // NOVA FUNÇÃO: Exibe o pop-up educativo
+  void mostrarExplicacao(String textoExplicativo, String titulo) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Impede que o usuário feche clicando fora
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Row(
+            children: [
+              Icon(
+                  titulo == "Tempo Esgotado!" ? Icons.timer_off : Icons.info_outline,
+                  color: titulo == "Tempo Esgotado!" ? Colors.orange : Colors.blue.shade700
+              ),
+              const SizedBox(width: 10),
+              Text(titulo),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: Text(
+              textoExplicativo,
+              style: const TextStyle(fontSize: 16, height: 1.4),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue.shade800,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o pop-up
+                proximaPergunta(); // Avança o jogo apenas depois de ler
+              },
+              child: const Text("Entendi, continuar"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-cronometro.iniciar();
-}
+  void responderTempoEsgotado() {
+    if (respondeu) return;
+    respondeu = true;
 
-void responderTempoEsgotado() {
-if (respondeu) return;
+    // Chama o pop-up passando a explicação da pergunta atual
+    mostrarExplicacao(perguntas[indice].explicacao, "Tempo Esgotado!");
+  }
 
-respondeu = true;
+  void proximaPergunta() {
+    if (indice < perguntas.length - 1) {
+      setState(() {
+        indice++;
+        respondeu = false;
+        tempoRestante = tempoMaximo;
+      });
+      cronometro.iniciar();
+    } else {
+      cronometro.parar();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => TelaResultado(
+            pontuacao: pontuacao,
+            total: perguntas.length,
+          ),
+        ),
+      );
+    }
+  }
 
-ScaffoldMessenger.of(context).showSnackBar(
-const SnackBar(
-backgroundColor: Colors.orange,
-content: Text("Tempo esgotado!"),
-duration: Duration(milliseconds: 700),
-),
-);
+  void responder(bool escolha) {
+    if (respondeu) return;
+    respondeu = true;
+    cronometro.parar();
 
-Future.delayed(const Duration(milliseconds: 700), () {
-proximaPergunta();
-});
-}
+    bool correta = perguntas[indice].resposta;
 
-void proximaPergunta() {
-if (indice < perguntas.length - 1) {
-  setState(() {
-    indice++;
-    respondeu = false;
-    tempoRestante = tempoMaximo;
-  });
+    if (escolha == correta) {
+      pontuacao++;
 
-  cronometro.iniciar();
-} else {
-cronometro.parar();
+      // Aqui está a grande mudança: chama o pop-up de sucesso!
+      mostrarSucesso();
 
-Navigator.pushReplacement(
-context,
-MaterialPageRoute(
-builder: (_) => TelaResultado(
-pontuacao: pontuacao,
-total: perguntas.length,
-),
-),
-);
-}
-}
+    } else {
+      // Se errou, abre o pop-up educativo
+      mostrarExplicacao(perguntas[indice].explicacao, "Resposta Incorreta");
+    }
+  }
 
-void responder(bool escolha) {
-if (respondeu) return;
+  @override
+  void dispose() {
+    cronometro.dispose();
+    super.dispose();
+  }
 
-respondeu = true;
+  @override
+  Widget build(BuildContext context) {
+    final pergunta = perguntas[indice];
 
-cronometro.parar();
-
-bool correta = perguntas[indice].resposta;
-
-if (escolha == correta) {
-pontuacao++;
-
-ScaffoldMessenger.of(context).showSnackBar(
-const SnackBar(
-backgroundColor: Colors.green,
-content: Text("Você acertou!"),
-duration: Duration(milliseconds: 500),
-),
-);
-} else {
-ScaffoldMessenger.of(context).showSnackBar(
-const SnackBar(
-backgroundColor: Colors.red,
-content: Text("Errou!"),
-duration: Duration(milliseconds: 500),
-),
-);
-}
-
-Future.delayed(const Duration(milliseconds: 600), () {
-proximaPergunta();
-});
-}
-
-@override
-void dispose() {
-cronometro.dispose();
-super.dispose();
-}
-
-@override
-Widget build(BuildContext context) {
-final pergunta = perguntas[indice];
-
-return Scaffold(
-appBar: AppBar(
-title: const Text("Fato ou Fake"),
-centerTitle: true,
-backgroundColor: Colors.transparent,
-elevation: 0,
-flexibleSpace: Container(
-decoration: BoxDecoration(
-gradient: LinearGradient(
-colors: [
-Colors.blue.shade900,
-Colors.blue.shade700,
-],
-),
-),
-),
-),
-body: Padding(
-padding: const EdgeInsets.all(20),
-child: Column(
-children: [
-Text(
-"Pergunta ${indice + 1} de ${perguntas.length}",
-style: const TextStyle(
-fontSize: 18,
-fontWeight: FontWeight.bold,
-),
-),
-
-const SizedBox(height: 15),
-
-LinearProgressIndicator(
-value: tempoRestante / tempoMaximo,
-minHeight: 12,
-borderRadius: BorderRadius.circular(20),
-backgroundColor: Colors.grey.shade300,
-valueColor: AlwaysStoppedAnimation<Color>(
-tempoRestante > 6
-? Colors.green
-: tempoRestante > 3
-? Colors.orange
-: Colors.red,
-),
-),
-
-const SizedBox(height: 10),
-
-Text(
-"$tempoRestante s",
-style: TextStyle(
-fontSize: 24,
-fontWeight: FontWeight.bold,
-color: tempoRestante > 6
-? Colors.green
-: tempoRestante > 3
-? Colors.orange
-: Colors.red,
-),
-),
-
-const SizedBox(height: 20),
-
-Expanded(
-child: Card(
-elevation: 5,
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(15),
-),
-child: Padding(
-padding: const EdgeInsets.all(8),
-child: Image.asset(
-pergunta.imagem,
-fit: BoxFit.contain,
-),
-),
-),
-),
-
-const SizedBox(height: 20),
-
-Text(
-pergunta.descricao,
-textAlign: TextAlign.center,
-style: const TextStyle(
-fontSize: 22,
-fontWeight: FontWeight.w500,
-),
-),
-
-const SizedBox(height: 30),
-
-SizedBox(
-width: double.infinity,
-height: 60,
-child: ElevatedButton(
-style: ElevatedButton.styleFrom(
-backgroundColor: Colors.green.shade600,
-disabledBackgroundColor: Colors.green.shade300,
-foregroundColor: Colors.white,
-disabledForegroundColor: Colors.white70,
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(15),
-),
-),
-onPressed: respondeu ? null : () => responder(true),
-child: const Text(
-"FATO",
-style: TextStyle(
-fontSize: 20,
-),
-),
-),
-),
-
-const SizedBox(height: 15),
-
-  SizedBox(
-    width: double.infinity,
-    height: 60,
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red.shade600,
-        disabledBackgroundColor: Colors.red.shade300,
-        foregroundColor: Colors.white,
-        disabledForegroundColor: Colors.white70,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Fato ou Fake"),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.shade900,
+                Colors.blue.shade700,
+              ],
+            ),
+          ),
         ),
       ),
-      onPressed: respondeu ? null : () => responder(false),
-      child: const Text(
-        "FAKE",
-        style: TextStyle(
-          fontSize: 20,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              "Pergunta ${indice + 1} de ${perguntas.length}",
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 15),
+            LinearProgressIndicator(
+              value: tempoRestante / tempoMaximo,
+              minHeight: 12,
+              borderRadius: BorderRadius.circular(20),
+              backgroundColor: Colors.grey.shade300,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                tempoRestante > 6
+                    ? Colors.green
+                    : tempoRestante > 3
+                    ? Colors.orange
+                    : Colors.red,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "$tempoRestante s",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: tempoRestante > 6
+                    ? Colors.green
+                    : tempoRestante > 3
+                    ? Colors.orange
+                    : Colors.red,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Image.asset(
+                    pergunta.imagem,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              pergunta.descricao,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green.shade600,
+                  disabledBackgroundColor: Colors.green.shade300,
+                  foregroundColor: Colors.white,
+                  disabledForegroundColor: Colors.white70,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                onPressed: respondeu ? null : () => responder(true),
+                child: const Text(
+                  "FATO",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red.shade600,
+                  disabledBackgroundColor: Colors.red.shade300,
+                  foregroundColor: Colors.white,
+                  disabledForegroundColor: Colors.white70,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                onPressed: respondeu ? null : () => responder(false),
+                child: const Text(
+                  "FAKE",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              "Pontuação: $pontuacao",
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
+              ),
+            ),
+          ],
         ),
       ),
-    ),
-  ),
-
-  const SizedBox(height: 20),
-
-  Text(
-    "Pontuação: $pontuacao",
-    style: const TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: Colors.grey,
-    ),
-  ),
-],
-),
-),
-);
-}
+    );
+  }
 }
