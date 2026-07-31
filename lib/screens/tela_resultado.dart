@@ -17,15 +17,15 @@ class TelaResultado extends StatelessWidget {
     Color corIcone;
 
     if (porcentagem >= 0.8) {
-      mensagemDesempenho = "EXCELENTE!";
+      mensagemDesempenho = "Excelente!";
       iconeDesempenho = Icons.emoji_events; // Troféu
       corIcone = Colors.amber;
     } else if (porcentagem >= 0.5) {
-      mensagemDesempenho = "BOM TRABALHO!";
+      mensagemDesempenho = "Bom trabalho!";
       iconeDesempenho = Icons.thumb_up_alt_outlined; // Joinha
       corIcone = Colors.blue.shade300;
     } else {
-      mensagemDesempenho = "CONTINUE ESTUDANDO!";
+      mensagemDesempenho = "Vamos tentar novamente?";
       iconeDesempenho = Icons.menu_book; // Livro
       corIcone = Colors.orange.shade300;
     }
@@ -55,7 +55,7 @@ class TelaResultado extends StatelessWidget {
             const SizedBox(height: 20),
 
             const Text(
-              "RESULTADO FINAL",
+              "Resultado final",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
@@ -131,7 +131,7 @@ class TelaResultado extends StatelessWidget {
                 );
               },
               child: const Text(
-                "VOLTAR AO INÍCIO",
+                "Voltar ao início",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
