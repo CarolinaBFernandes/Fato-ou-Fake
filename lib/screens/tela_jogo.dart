@@ -110,47 +110,219 @@ class _TelaJogoState extends State<TelaJogo> {
     );
   }
 
-  // NOVA FUNÇÃO: Exibe o pop-up educativo
-  void mostrarExplicacao(String textoExplicativo, String titulo) {
+  void mostrarErro() {
     showDialog(
       context: context,
-      barrierDismissible: false, // Impede que o usuário feche clicando fora
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(20),
           ),
+          backgroundColor: Colors.red.shade50,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.cancel,
+                color: Colors.red,
+                size: 80,
+              ),
+              const SizedBox(height: 15),
+              const Text(
+                "Você errou!",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    proximaPergunta();
+                  },
+                  child: const Text(
+                    "Próxima Pergunta",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void mostrarTempoEsgotado() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.orange.shade50,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.timer_off,
+                color: Colors.orange,
+                size: 80,
+              ),
+              const SizedBox(height: 15),
+              const Text(
+                "Tempo Esgotado!",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "Você não respondeu a tempo.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17),
+              ),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    proximaPergunta();
+                  },
+                  child: const Text(
+                    "Próxima Pergunta",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // NOVA FUNÇÃO: Exibe o pop-up educativo
+  void mostrarExplicacao(String? textoExplicativo, String titulo) {
+    if (textoExplicativo == null || textoExplicativo.isEmpty) {
+      if (titulo == "Resposta Incorreta") {
+        mostrarErro();
+      } else if (titulo == "Tempo Esgotado!") {
+        mostrarTempoEsgotado();
+      }
+
+      return;
+    }
+
+    Color cor;
+    Color corFundo;
+    IconData icone;
+
+    if (titulo == "Resposta Incorreta") {
+      cor = Colors.red;
+      corFundo = Colors.red.shade50;
+      icone = Icons.cancel;
+    } else if (titulo == "Tempo Esgotado!") {
+      cor = Colors.orange;
+      corFundo = Colors.orange.shade50;
+      icone = Icons.timer_off;
+    } else {
+      cor = Colors.blue;
+      corFundo = Colors.blue.shade50;
+      icone = Icons.info_outline;
+    }
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: corFundo,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+
           title: Row(
             children: [
               Icon(
-                  titulo == "Tempo Esgotado!" ? Icons.timer_off : Icons.info_outline,
-                  color: titulo == "Tempo Esgotado!" ? Colors.orange : Colors.blue.shade700
+                icone,
+                color: cor,
+                size: 32,
               ),
-              const SizedBox(width: 10),
-              Text(titulo),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  titulo,
+                  style: TextStyle(
+                    color: cor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
+
           content: SingleChildScrollView(
             child: Text(
               textoExplicativo,
-              style: const TextStyle(fontSize: 16, height: 1.4),
+              style: const TextStyle(
+                fontSize: 16,
+                height: 1.5,
+              ),
               textAlign: TextAlign.justify,
             ),
           ),
+
           actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue.shade800,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  proximaPergunta();
+                },
+                child: const Text(
+                  "Entendi, continuar",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              onPressed: () {
-                Navigator.of(context).pop(); // Fecha o pop-up
-                proximaPergunta(); // Avança o jogo apenas depois de ler
-              },
-              child: const Text("Entendi, continuar"),
             ),
           ],
         );

@@ -2,142 +2,132 @@ import '../models/pergunta.dart';
 
 final List<Pergunta> bancoPerguntas = [
   Pergunta(
-    imagem: "assets/gato.jpg",
-    descricao: "Um gato possui duas caudas.",
+    imagem: "assets/silvio.png",
+    descricao: "Silvio Santos visitou São Sebastião do Alto em 2010.",
     resposta: false,
-    explicacao: "FAKE! Gatos possuem apenas uma cauda. Imagens de gatos com duas caudas na internet geralmente são edições e manipulações digitais.",
+    explicacao: "FAKE! Não há registros históricos ou públicos de que Silvio Santos tenha visitado o município de São Sebastião do Alto no ano de 2010. Essa imagem foi gerada por Inteligência artificial.",
   ),
 
   Pergunta(
-    imagem: "assets/lua.jpg",
-    descricao: "A lua é um astro iluminado.",
-    resposta: true,
-    explicacao: "FATO! A Lua é um satélite natural que não possui luz própria, ela apenas reflete a luz que recebe do Sol, sendo classificada como um astro iluminado e não luminoso.",
-  ),
-
-  Pergunta(
-    imagem: "assets/cachorro.jpg",
-    descricao: "Este cachorro nasceu com três olhos.",
+    imagem: "assets/pordosol.png",
+    descricao: "Lindo pôr do sol em São Sebastião do Alto.",
     resposta: false,
-    explicacao: "FAKE! Cães nascem com dois olhos. Imagens de animais com anomalias irreais como essa costumam ser manipulações feitas por Inteligência Artificial para viralizar nas redes.",
+    explicacao: "FAKE! Imagem gerada por IA.",
   ),
 
   Pergunta(
-    imagem: "assets/terra.jpg",
-    descricao: "A Terra é o terceiro planeta do Sistema Solar.",
-    resposta: true,
-    explicacao: "FATO! O nosso Sistema Solar começa com Mercúrio, seguido por Vênus e, em terceiro lugar, o nosso planeta Terra.",
-  ),
-
-  Pergunta(
-    imagem: "assets/pinguim.jpg",
-    descricao: "Pinguins conseguem voar.",
+    imagem: "assets/nossasenhora.png",
+    descricao: "30 de Agosto dia de homenagear Nossa Senhora do Livramento.",
     resposta: false,
-    explicacao: "FAKE! Pinguins não conseguem voar no ar. Suas asas evoluíram ao longo de milhões de anos para funcionar como nadadeiras, tornando-os excelentes nadadores.",
+    explicacao: "FAKE! A data correta seria 15 de Agosto dia de Nossa Senhora do Livramento, imagem modificada por IA.",
   ),
 
   Pergunta(
-    imagem: "assets/ceu.jpg",
-    descricao: "O céu é azul por causa da forma como a luz do sol interage com a atmosfera.",
-    resposta: true,
-    explicacao: "FATO! A luz do sol entra na atmosfera e os gases espalham a luz azul em todas as direções porque ela viaja em ondas menores. Esse fenômeno é chamado de Dispersão de Rayleigh.",
-  ),
-
-  Pergunta(
-    imagem: "assets/morcego.jpg",
-    descricao: "Os morcegos são aves porque possuem asas e voam.",
+    imagem: "assets/festa.png",
+    descricao: "Programação da Festa da Padroeira.",
     resposta: false,
-    explicacao: "FAKE! Morcegos não são aves, são mamíferos! Na verdade, eles são a única ordem de mamíferos capaz de voar de forma verdadeira e sustentada.",
+    explicacao: "FAKE! Programação da Festa da Padroeira modificada por IA, Pabllo Vittar e Ludmilla não faziam parte da programação.",
   ),
 
   Pergunta(
-    imagem: "assets/girafa.jpg",
-    descricao: "A girafa é o animal terrestre mais alto do mundo.",
-    resposta: true,
-    explicacao: "FATO! As girafas são os animais terrestres mais altos do planeta. Os machos podem ultrapassar facilmente os 5 metros de altura.",
-  ),
-
-  Pergunta(
-    imagem: "assets/eiffel.jpg",
-    descricao: "A Torre Eiffel fica localizada na cidade de Roma, na Itália.",
+    imagem: "assets/valaobarro.png",
+    descricao: "Imagem aérea de Valão do Barro mostra beleza do distrito.",
     resposta: false,
-    explicacao: "FAKE! A Torre Eiffel é o monumento mais famoso de Paris, capital da França, e não de Roma.",
+    explicacao: "FAKE! Imagem aérea de Valão do Barro modificada por IA, dois prédios inexistentes foram adicionados na imagem.",
   ),
 
   Pergunta(
-    imagem: "assets/dentes.jpg",
-    descricao: "Os dentes são considerados partes do esqueleto humano.",
-    resposta: true,
-    explicacao: "FATO! Os dentes fazem parte do sistema esquelético humano, embora não sejam considerados ossos (são formados por tecidos super duros, como o esmalte e a dentina).",
-  ),
-
-  Pergunta(
-    imagem: "assets/tomate.jpg",
-    descricao: "O tomate é considerado uma fruta botanicamente falando.",
-    resposta: true,
-    explicacao: "FATO! Botanicamente, o tomate é o ovário maduro da flor do tomateiro, contendo sementes. Isso o classifica como uma fruta, mesmo sendo usado como legume nas receitas.",
-  ),
-
-  Pergunta(
-    imagem: "assets/cenoura.jpg",
-    descricao: "Comer cenoura faz bem para a visão.",
-    resposta: true,
-    explicacao: "FATO! A cenoura é rica em betacaroteno (vitamina A), que é essencial para a saúde ocular. Porém, a história de que ela dá 'supervisão' noturna foi uma propaganda militar na Segunda Guerra Mundial!",
-  ),
-
-  Pergunta(
-    imagem: "assets/mapabr.jpg",
-    descricao: "O Brasil faz fronteira com todos os países da América do Sul.",
+    imagem: "assets/mec.png",
+    descricao: "MEC decreta: A partir do mês que vem, todas as escolas rurais do interior do estado vão ter aulas aos domingos para repor matérias.",
     resposta: false,
-    explicacao: "FAKE! O Brasil é gigante e faz fronteira com quase todos os países sul-americanos, mas existem duas exceções: Chile e Equador.",
+    explicacao: "FAKE! Notícia falsa, o MEC não decretou aulas aos domingos. Muitas vezes são utilizados de órgãos públicos para consolidar uma notícia. Esse tipo de notícia também traz irritação, fazendo com que a pessoa compartilhe antes de averiguar se é real.",
   ),
 
   Pergunta(
-    imagem: "assets/pacifico.jpg",
-    descricao: "O Oceano Pacífico é o maior oceano da Terra.",
-    resposta: true,
-    explicacao: "FATO! O Pacífico é o maior e mais profundo oceano do planeta, cobrindo cerca de um terço de toda a superfície da Terra.",
-  ),
-
-  Pergunta(
-    imagem: "assets/espaco.jpg",
-    descricao: "O som se espalha mais rápido no espaço do que na Terra.",
+    imagem: "assets/auxilio.png",
+    descricao: " A Prefeitura de São Sebastião do Alto libera auxílio no valor de 1.500 reais para moradores de baixa renda do distrito de Valão do Barro. Cadastre-se no link.",
     resposta: false,
-    explicacao: "FAKE! O som não se propaga no espaço! O som é uma onda mecânica que precisa de um meio (como ar ou água) para viajar. Como o espaço é um vácuo, ele é completamente silencioso.",
+    explicacao: "FAKE! Usar a prefeitura como base faz as notícias parecerem reais, o dinheiro também é um grande gancho para fazer as pessoas acessarem links e compartilharem notícias falsas.",
   ),
 
   Pergunta(
-    imagem: "assets/sol.jpg",
-    descricao: "O Sol é uma estrela.",
-    resposta: true,
-    explicacao: "FATO! O Sol é uma estrela do tipo anã amarela e é o corpo celeste central do nosso Sistema Solar, composto principalmente de gases em constante fusão.",
-  ),
-
-  Pergunta(
-    imagem: "assets/ursop.jpg",
-    descricao: "Os ursos-polares têm a pele preta por baixo dos pelos brancos.",
-    resposta: true,
-    explicacao: "FATO! Por baixo da densa pelagem (que na verdade é oca e transparente), a pele do urso-polar é totalmente preta, o que ajuda a absorver melhor o calor do sol no frio do Ártico.",
-  ),
-
-  Pergunta(
-    imagem: "assets/mosquito.jpg",
-    descricao: "Os mosquitos têm dentes.",
+    imagem: "assets/inseticida.png",
+    descricao: "Novo inseticida importado faz pé de café e hortaliças crescerem em 48 horas no interior do RJ, mas governo proíbe venda no Brasil.",
     resposta: false,
-    explicacao: "FAKE! Mosquitos não possuem dentes. Eles usam uma estrutura em formato de agulha chamada probóscide para perfurar a pele e sugar o sangue.",
+    explicacao: "FAKE! Aqui o recurso usado foi falar de um produto importado, ou seja, algo que não temos conhecimento, se é possível existir algo do tipo ou não.",
   ),
 
   Pergunta(
-    imagem: "assets/everest.jpg",
-    descricao: "O Monte Everest é a montanha mais alta do mundo.",
-    resposta: true,
-    explicacao: "FATO! O Monte Everest, localizado na cordilheira do Himalaia (entre o Nepal e o Tibete), é a montanha mais alta do mundo acima do nível do mar.",
+    imagem: "assets/ufrj.png",
+    descricao: "Pesquisa da UFRJ aponta presença de minerais raros na água de Valão do Barro e prefeitura estuda cadastrar poços artesianos do distrito.",
+    resposta: false,
+    explicacao: "FAKE! Aqui o recurso usado foi a UFRJ, uma universidade séria, onde normalmente confiamos no que é noticiado por universidades grandes.",
   ),
 
   Pergunta(
-    imagem: "assets/ouro.jpg",
-    descricao: "O ouro puro é tão macio que pode ser moldado com as mãos.",
+    imagem: "assets/posto.png",
+    descricao: "Posto de Saúde de Valão do Barro fará mutirão neste sábado com distribuição de kits de vitaminas.",
+    resposta: false,
+    explicacao: "FAKE! Usando o posto de saúde para consolidar uma notícia fake, não houve nenhuma notificação real sobre mutirão de distribuição de kits de vitaminas.",
+  ),
+
+  Pergunta(
+    imagem: "assets/barcelos.png",
+    descricao: "Sábado, dia 04/04/2026 inaugura em Valão do Barro a Drogaria Barcelos.",
     resposta: true,
-    explicacao: "FATO! O ouro 24 quilates (100% puro) é extremamente maleável e macio. É por isso que, na joalheria, ele sempre é misturado com outros metais para ganhar resistência e não amassar facilmente.",
+  ),
+
+  Pergunta(
+    imagem: "assets/politica.png",
+    descricao: "São Sebastião do Alto se destaca no RJ com representação feminina em meio a baixa presença de mulheres na política brasileira.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/exame.png",
+    descricao: "Ótica Pontilhão realizou no dia 09/04 exames de vista gratuitos para a população de Valão do Barro.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/tombou.png",
+    descricao: "Um caminhão tombou na RJ-116, na altura de Valão do Barro, por volta das 19h de terça (19/05). O acidente mobilizou equipes de atendimento rodoviário. O motorista foi socorrido após o tombamento e encaminhado ao hospital de São Sebastião do Alto.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/expo.png",
+    descricao: "Valão do Barro será palco da 2ª Expo Gospel nos dias 7 e 8 de agosto. Promovido pela Prefeitura Municipal, em parceria com a Associação de Pastores Evangélicos de São Sebastião do Alto, o evento terá dois dias de programação voltada ao louvor, à adoração e à celebração da fé cristã.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/comemora.png",
+    descricao: "São Sebastião do Alto comemora seus 135 anos em 17 de abril de 2026.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/bullying.png",
+    descricao: "O colégio Estadual Januário de Toledo Pizza realizou a semana de conscientização sobre o combate ao bullying.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/faa.png",
+    descricao: "A FAA PET realizou castrações gratuitas no Município de São Sebastião do Alto, nos dias 07 e 08 de abril de 2026, na quadra municipal de Valão do Barro.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/chuvas.png",
+    descricao: "Campanhas mobilizam São Sebastião do Alto. Doações são para famílias atingidas pelas fortes chuvas.",
+    resposta: true,
+  ),
+
+  Pergunta(
+    imagem: "assets/vacina.png",
+    descricao: "A Prefeitura de São Sebastião do Alto, por meio da Secretaria de Saúde e Higiene, informa que a nova vacina pneumocócica 20-valente já está disponível em nossa rede municipal. Dirija-se à unidade de vacinação mais próxima de sua residência. As salas de vacinação funcionam de segunda a sexta-feira, das 08h às 16h.",
+    resposta: true,
   ),
 ];
