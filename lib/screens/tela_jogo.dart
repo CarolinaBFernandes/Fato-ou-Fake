@@ -20,7 +20,7 @@ class _TelaJogoState extends State<TelaJogo> {
   late List<Pergunta> perguntas;
   late CronometroService cronometro;
 
-  static const int tempoMaximo = 10;
+  static const int tempoMaximo = 20;
   int tempoRestante = tempoMaximo;
 
   bool respondeu = false;

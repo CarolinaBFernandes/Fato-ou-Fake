@@ -1,4 +1,4 @@
-package com.example.teste2ff
+package com.example.fatooufake
 
 import io.flutter.embedding.android.FlutterActivity
 
